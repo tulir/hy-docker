@@ -19,7 +19,7 @@
 | [1](2/1) | [docker-compose](2/1/docker-compose.yml) |
 | [2](2/2) | [docker-compose](2/2/docker-compose.yml) |
 | [3](2/3) | [docker-compose](2/3/docker-compose.yml) |
-| [4](2/4) | Skipped                                  |
+| 4        | Skipped                                  |
 | [5](2/5) | [docker-compose](2/5/docker-compose.yml), [nginx config](2/5/conf.d/default.conf) |
 | [6](2/6) | [docker-compose](2/6/docker-compose.yml) |
 
