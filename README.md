@@ -11,11 +11,17 @@
 | [6](1/6) | [Dockerfile](1/6/Dockerfile)             |
 | [7](1/7) | [start script](1/7/start.sh)             |
 | [8](1/8) | [README](1/8/README.md)                  |
+| 9        | Skipped                                  |
 
 ## Week 2
 | exercise | relevant file(s)                         |
 |----------|------------------------------------------|
 | [1](2/1) | [docker-compose](2/1/docker-compose.yml) |
+| [2](2/2) | [docker-compose](2/2/docker-compose.yml) |
+| [3](2/3) | [docker-compose](2/3/docker-compose.yml) |
+| [4](2/4) | Skipped                                  |
+| [5](2/5) | [docker-compose](2/5/docker-compose.yml), [nginx config](2/5/conf.d/default.conf) |
+| [6](2/6) | [docker-compose](2/6/docker-compose.yml) |
 
 ## Week 3
 TODO
