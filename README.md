@@ -24,4 +24,12 @@
 | [6](2/6) | [docker-compose](2/6/docker-compose.yml) |
 
 ## Week 3
-TODO
+| exercise | relevant file(s)                         |
+|----------|------------------------------------------|
+| [1](3/1) | [Backend](3/1/backend/Dockerfile), [Frontend](3/1/frontend/Dockerfile) |
+| [2](3/2) | [Dockerfile](3/2/Dockerfile), [Usage](3/2/DOCKER.md) |
+| 3        | TODO                                     |
+| 4        | TODO                                     |
+| 5        | TODO                                     |
+| 6        | TODO                                     |
+| 7        | Skipped                                  |
