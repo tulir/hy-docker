@@ -1,0 +1,2 @@
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
+ff1f80cb0fee        nginx               "nginx -g 'daemon of…"   About a minute ago   Up About a minute   80/tcp              nginx_2
