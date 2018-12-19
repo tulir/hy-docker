@@ -9,11 +9,13 @@
 | [4](1/4) | [Dockerfile](1/4/Dockerfile), [inside docker script](1/3/run.sh), [run docker script](1/3/run-in-docker.sh) |
 | [5](1/5) | [Dockerfile](1/5/Dockerfile)             |
 | [6](1/6) | [Dockerfile](1/6/Dockerfile)             |
-| [7](1/7) | [docker-compose](1/7/docker-compose.yml) |
+| [7](1/7) | [start script](1/7/start.sh)             |
 | [8](1/8) | [README](1/8/README.md)                  |
 
 ## Week 2
-TODO
+| exercise | relevant file(s)                         |
+|----------|------------------------------------------|
+| [1](2/1) | [docker-compose](2/1/docker-compose.yml) |
 
 ## Week 3
 TODO
