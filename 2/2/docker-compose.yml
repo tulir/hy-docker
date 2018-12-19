@@ -1,0 +1,21 @@
+version: "3.6"
+services:
+  frontend:
+    build: ../../1/5
+    ports:
+    - 5000:5000
+    environment:
+    - API_URL=http://localhost:8000
+  backend:
+    build: ../../1/6
+    ports:
+    - 8000:8000
+    volumes:
+    - ./logs:/app/logs
+    environment:
+    - FRONT_URL=http://localhost:5000
+    - REDIS=redis
+    depends_on:
+    - redis
+  redis:
+    image: redis:alpine
