@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Remux a video into a mp4 container and delete the original.
+#
+# This is part of yle-dl. This is an example of a postprocessing
+# script.
+#
+# Usage:
+#
+# muxmp4 videofile.flv subtitlefile.srt
+
+absolute_path() {
+    case "$1" in
+	/*) echo "$1";;
+	*)  echo "$PWD/$1";;
+    esac
+}
+
+INPUTVIDEOFILE="$1"
+SUBTITLEFILE="$2"
+OUTPUTFILE=$(echo "$INPUTVIDEOFILE" | sed 's/.flv$//').mp4
+ABS_INPUT=$(absolute_path "$INPUTVIDEOFILE")
+ABS_OUTPUT=$(absolute_path "$OUTPUTFILE")
+
+if [ -n "$SUBTITLEFILE" ]; then
+    ABS_SUBTITLE=$(absolute_path "$SUBTITLEFILE")
+
+    ffmpeg -i "file://$ABS_INPUT" -f srt -i "file://$ABS_SUBTITLE" -codec copy -c:s mov_text "file://$ABS_OUTPUT"
+else
+    ffmpeg -i "file://$ABS_INPUT" -codec copy "file://$ABS_OUTPUT"
+fi
+
+if [ $? -eq 0 ]; then
+    rm "$@"
+fi

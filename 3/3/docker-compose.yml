@@ -2,33 +2,35 @@ version: "3.6"
 services:
   frontend:
     build:
-      context: ../../1/5
+      context: ./frontend
       args:
         api_url: http://localhost:8080/api
     environment:
     - API_URL=http://localhost:8080/api
   backend:
-    build: ../../1/6
-    volumes:
-    - ./logs:/app/logs
+    build: ./backend
     environment:
     - FRONT_URL=http://localhost:8080
     - REDIS=redis
     - DB_HOST=db
-    - DB_NAME=db_25
-    - DB_USERNAME=user_25
+    - DB_NAME=db_33
+    - DB_USERNAME=user_33
     - DB_PASSWORD=83CON6NDazpJ700D2xu2GpXnu6PZpZTYDqjGuoKwJ7zd58F4P0
     depends_on:
     - redis
     - db
   redis:
     image: redis:alpine
+    volumes:
+    - ./redis:/data
   db:
     image: postgres:alpine
     environment:
     - POSTGRES_PASSWORD=83CON6NDazpJ700D2xu2GpXnu6PZpZTYDqjGuoKwJ7zd58F4P0
-    - POSTGRES_DB=db_25
-    - POSTGRES_USER=user_25
+    - POSTGRES_DB=db_33
+    - POSTGRES_USER=user_33
+    volumes:
+    - ./db:/var/lib/postgresql/data
   nginx:
     image: nginx:alpine
     ports:

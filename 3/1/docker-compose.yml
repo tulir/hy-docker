@@ -16,8 +16,8 @@ services:
     - FRONT_URL=http://localhost:5000
     - REDIS=redis
     - DB_HOST=db
-    - DB_NAME=db_23
-    - DB_USERNAME=user_23
+    - DB_NAME=db_31
+    - DB_USERNAME=user_31
     - DB_PASSWORD=83CON6NDazpJ700D2xu2GpXnu6PZpZTYDqjGuoKwJ7zd58F4P0
     depends_on:
     - redis
@@ -28,5 +28,5 @@ services:
     image: postgres:alpine
     environment:
     - POSTGRES_PASSWORD=83CON6NDazpJ700D2xu2GpXnu6PZpZTYDqjGuoKwJ7zd58F4P0
-    - POSTGRES_DB=db_23
-    - POSTGRES_USER=user_23
+    - POSTGRES_DB=db_31
+    - POSTGRES_USER=user_31

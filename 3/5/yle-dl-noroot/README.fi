@@ -1,0 +1,198 @@
+Apuohjelma videoiden lataamiseen Yle Areenasta
+Copyright (C) 2010-2018 Antti Ajanki, antti.ajanki@iki.fi
+Ohjelmistolisenssi: GPLv3
+Kotisivu: https://aajanki.github.com/yle-dl/
+Lähdekoodi: https://github.com/aajanki/yle-dl
+
+yle-dl on apuohjelma tiedostojen lataamiseen Yle Areenasta
+(https://areena.yle.fi), Elävästä arkistosta
+(http://yle.fi/aihe/elava-arkisto) ja Ylen uutissivustolta
+(http://yle.fi/uutiset/).
+
+Asennusohjeet
+-------------
+
+Alla on yleiset asennusohjeet. Yksityiskohtaisemmat asennusohjeet
+Debianille, Ubuntulle, Mac OS X:lle, Windowsille ja Androidille
+löytyvät tiedostosta OS-install-instructions.md.
+
+Asenna riippuvuudet:
+
+* Python 2.7 tai 3.5+
+* pip
+* pycryptodome
+* wget
+* ffmpeg
+* setuptools (jos asennat lähdekoodeista)
+
+Joidenkin ohjelmien lataamiseen tarvitaan lisäksi:
+
+* PHP-tulkki ja bcmath-, curl-, openssl- ja SimpleXML-laajennukset: suorat
+  TV-lähetykset ja jotkin uutis- ja ajankohtaisohjelmat
+* rtmpdump (versio 2.4 tai uudempi): Areenan radio-ohjelmat
+
+Ota PHP-laajennukset käyttöön lisäämällä seuraavanlaiset rivit oikeine
+polkuineen php.ini-tiedostoon
+(https://secure.php.net/manual/en/configuration.file.php):
+
+extension=/polku/curl.so
+
+Asenna seuraavaksi yle-dl joko asentamalla esikäännetty paketti (ei
+vaadi lähdekoodien lataamista):
+
+pip3 install --user --upgrade yle-dl
+
+tai lataamalla lähdekoodit ja ajamalla seuraava komento
+lähdekoodihakemistossa:
+
+python3 setup.py install --user
+
+
+Asennus, kun lataukseen käytetään youtube-dl:ää
+-----------------------------------------------
+
+Oletuksena Areenan ohjelmien lataamiseen käytetään paketin mukana
+tulevaa AdobeHDS.php-skriptiä. Jos AdobeHDS.php ei jostain syystä
+toimi, on mahdollista ladata videoita youtube-dl:llä. yle-dl siirtyy
+automaattisesti käyttämään youtube-dl:ää, jos se on asennettu eikä
+AdobeHDS.php toimi.
+
+Suorita asennus kuten yllä, mutta jätä PHP-tulkki ja PHP-kirjastot
+pois. Asenna lisäksi youtube-dl:
+
+* Mac OS X: `brew install youtube-dl`
+* Debian/Ubuntu/muut käyttöjärjestelmät: `pip3 install --user --upgrade youtube_dl`
+
+
+libav:n käyttö ffmpegin sijaan
+------------------------------
+
+yle-dl --ffmpeg avconv --ffprobe avprobe ...
+
+
+Valmiit asennuspaketit
+----------------------
+
+Katso lista saatavilla olevista asennuspaketeista osoitteesta
+https://aajanki.github.io/yle-dl/
+
+
+Integraatiotestien ajaminen
+---------------------------
+
+python3 setup.py pytest
+
+Jotkin testit onnistuvat vain suomalaisesta IP-osoitteesta, koska osa
+Areenan videoista on saatavilla vain Suomessa. Oletuksena nämä testit
+hypätään yli. Ajaaksesi myös nämä testit määrittele ympäristömuuttujan
+ENABLE_FINLAND_TESTS arvoksi 1:
+
+export ENABLE_FINLAND_TESTS=1
+python3 setup.py pytest
+
+
+Käyttö
+------
+
+yle-dl [valitsimet] URL
+
+tai
+
+yle-dl [valitsimet] -i tiedosto
+
+
+Korvaa URL webbi-osoitteella, missä ladatavaa ohjelmaa voisi katsoa
+nettiselaimen kautta. URL voi olla joko Yle Areenan tai Elävän
+arkiston osoite.
+
+Valitsimet:
+
+-o filename     Tallenna striimi nimettyyn tiedostoon
+-i filename     Lue käsiteltävät URLit tiedostosta, yksi URL per rivi
+--latestepisode Lataa viimeisimmän jakson sivulta
+--showurl       Tulostaa videon URL, ei lataa tiedostoa
+--showtitle     Tulostaa ohjelman nimen, ei lataa tiedostoa
+--showmetadata  Tulostaa metatietoja ohjelmasta. Katso docs/metadata.md
+--vfat          Tuota Windows-yhteensopivia tiedoston nimiä
+--audiolang lan Lataa ääniraita tietyllä kielellä jos saatavilla
+                lan = fin (oletus) tai swe
+--sublang lan   Lataa tekstitykset annetulla kielellä (Yle Areena)
+                lan = fin, swe, smi, none or all (oletus)
+--resolution r  Rajoita ladattavan striimin pystyresoluutiota
+--maxbitrate br Rajoita ladattavan striimin bittinopeutta (kB/s)
+--rtmpdump path Polku rtmpdump-ohjelmaan
+--adobehds cmd  Aseta komento AdobeHDS.php-skriptin kutsumiseen
+--postprocess c Suorita ohjelma c onnistuneen latauksen jälkeen.
+                Ohjelmalle c annetaan parametriksi ladatun FLV tiedoston nimi
+		ja mahdollisten tekstitystiedostojen nimet.
+--proxy uri     Käytä HTTP(S)-proxyä. Esimerkki: --proxy localhost:8118
+--destdir dir   Aseta hakemisto mihin tiedostot tallennetaan
+--pipe          Ohjaa striimi stdout:iin, esim. "yle-dl --pipe URL | vlc -"
+--backend vals  Järjestys, jossa lataajia kokeillaan kunnes jokin niistä
+                onnistuu lataamaan ohjelman. Voi sisältää useita arvoja
+                pilkuilla eroteltuina. Mahdolliset arvot:
+                  adobehdsphp - lataa käyttäen AdobeHDS.php:ta
+                  youtubedl - lataa HDS-striimi käyttäen youtube-dl:ää
+-V, --verbose   Tulosta enemmän tietoja latauksen etenemisestä
+
+Muut valitsimet välitetään rtmpdump:lle, jos ladataan RTMP-tyyppistä
+striimiä. Luettelon mahdollisista valitsimista (englanniksi) näkee
+komentamalla
+
+yle-dl --help
+
+Lataaminen SOCKS5-proxyn kautta on mahdollista käyttämällä
+tsocks-ohjelmaa.
+
+Jotta yhteyden muodostaminen onnistuisi, palomuurin täytyy sallia
+ulospäin menevä liikenne porteissa 80 ja 1935.
+
+
+Asetustiedosto
+--------------
+
+Kahdella viivalla (--) alkavien valitsimien arvot voi asettaa myös
+asetustiedostossa. Asetukset luetaan tiedostosta ~/.yledl.conf tai
+tiedostosta, jonka nimi annetaan --config-valitsimella. Lähdekoodien
+mukana tulee esimerkkitiedosto yledl.conf.sample.
+
+Asetustiedoston syntaksi: avain=arvo, avain=true.
+Komentorivivalitsimet ohittavat asetustiedostossa annetut arvot, jos
+sama valitsin on määritelty kummallakin tavalla.
+
+
+Esimerkkejä
+-----------
+
+* Areenan ohjelman lataaminen automaattisesti nimettävään tiedostoon:
+
+  yle-dl https://areena.yle.fi/1-1544491
+
+* Käytä youtube-dl-lataajaa (AdobeHDS.php:n sijaan):
+
+  yle-dl --backend youtubedl https://areena.yle.fi/1-1544491
+
+* Elävän arkiston ohjelman kaikkien jaksojen lataaminen:
+
+  yle-dl http://yle.fi/aihe/artikkeli/2010/10/28/studio-julmahuvi-roudasta-rospuuttoon
+
+* Ohjelman lataaminen tiedostoon uutiset.flv:
+
+  yle-dl https://areena.yle.fi/1-1544491 -o uutiset.flv
+
+* Keskeytyneen latauksen jatkaminen tiedostoon uutiset.flv:
+
+  yle-dl https://areena.yle.fi/1-1544491 -o uutiset.flv --resume
+
+* Lataa uusimmat uutiset
+
+  yle-dl --latestepisode https://areena.yle.fi/?q=uutiset
+
+* Toistaminen suoraan videotoistimessa:
+
+  yle-dl --pipe https://areena.yle.fi/1-2409251 | vlc --file-caching=10000 --sub-track=0 -
+
+* Ladatun tiedoston jatkokäsitteleminen skriptillä (katso esimerkki
+  scripts/muxmp4-tiedostossa):
+
+  yle-dl --postprocess scripts/muxmp4 https://areena.yle.fi/1-1864726

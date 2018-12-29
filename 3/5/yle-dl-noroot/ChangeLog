@@ -1,0 +1,589 @@
+yle-dl - download videos from Yle servers
+Copyright 2009-2018 Antti Ajanki
+Distributed under the GPL v3
+
+<Unreleased>
+
+- Fixed downloading of Areena audio streams
+- Fixed support for some videos that are only available at a low resolution
+
+Version 20181103
+
+- yle-dl will use date-based version numbers from now on
+- Support for new Areena radio streams
+- More robust parsing for Elävä Arkisto
+- To run tests that only succeed on a Finnish IP, set ENABLE_FINLAND_TESTS=1
+
+21 Oct 2018, Version 2.37
+
+- Fixed live radio stream downloading
+- Use --proxy for all metadata calls
+- Stop claiming that SOCKS5 proxies are supported
+
+31 Aug 2018, Version 2.36
+
+- Some streams previously failed because their type was misdetected
+- More consistent title formatting
+
+8 Aug 2018, version 2.35
+
+- Improved support for European Athletics Championships streams
+- Download the HLS variant of the live TV streams by default (same as the
+  Areena web). Use "--backend adobehdsphp" to get back the earlier behaviour
+  (downloading the HDS variant).
+- Argument values can now be set in a config file. See yledl.conf.sample
+
+12 Jul 2018, Version 2.34
+
+- Possibility to download only the subtitles, not the video: --subtitlesonly
+- All downloader backends can now be enabled or disabled using the --backend argument
+- --showmetadata displays the available backends for each stream
+- Fixed news clip downloading after changes to the Yle news site
+
+19 Jun 2018, Version 2.33
+
+- Support for the football world cup streams
+- Fixed live radio streams. They were broken because of changes in Areena.
+
+15 Apr 2018, Version 2.32
+
+- Fix parsing of non-ASCII command line arguments on Python 2
+- The mcrypt PHP extension is not required anymore
+- Prefer PyCryptodome instead of pycrypto. Pycrypto works still for
+  now but I may drop the support in some future version.
+- Improved error message if a download fails because of the geo
+  restriction
+- Fix spawning of subprocesses on Windows
+
+10 Feb 2018, Version 2.31
+
+- Support the /tv/ohjelmat URLs
+- Support the new live radio URLs. Drop the support for the old URLs.
+- Download the HLS version of a live radio stream (like the Areena web app)
+- Include subtitles when piping a video
+- Don't restart and remove a partially downloaded file
+- Don't restart a piped download when the media player is closed
+- Geo restrictions warning was some times shown unnecessary
+
+19 Dec 2017, Version 2.30
+
+- yle-dl now runs on Python 3.5 and 3.6 (as well as on Python 2.7 like before)
+
+7 Dec 2017, Version 2.29
+
+- New argument --resolution for selecting stream by vertical resolution
+- Reduce repetition in output filenames
+- Remove genre prefixes ("Elokuva:", "Kino:", etc.) from output filenames
+- More streams now obey --proxy
+- Avoid re-downloading subtitles on --resume
+- Quicker check to see if a file has already been downloaded
+
+19 Nov 2017, Version 2.28
+
+- The wget downloader fails on some videos, use ffmpeg instead.
+- Possibility to use libav instead of ffmpeg. See README.md.
+- Fixed an issue with Unicode characters when a file has already been downloaded
+- Avoid re-downloading on --resume when the file name contains a colon
+- Show a warning if a download failure might be caused by a geo restriction
+
+29 Oct 2017, Version 2.27
+
+- --showmeta now prints the resolution for HDS streams
+- Fixed --maxbitrate on HDS streams
+- Don't redownload already downloaded files when using --resume (HDS streams).
+  Requires ffmpeg and ffprobe.
+- --duration now works on RTMP streams
+- Warn if an output file extension is unsupported
+- Fixed the timestamp of wget downloads
+
+14 Oct 2017, Version 2.26
+
+- Support wget older than 1.16
+- Support older python-requests. Retry is disabled on old python-requests.
+- Refuse to install on Python 3
+
+9 Oct 2017, Version 2.25
+
+- This version requires wget
+- Retry failing downloads (HTML5 streams and stream metadata only)
+- Support --resume on HTML5 streams
+- Cancel stalled metadata downloads after a timeout
+- Fallback to youtube-dl only when it is useful
+
+23 Sep 2017, Version 2.24
+
+- Option --showmetadata for printing stream metadata (available bitrates, etc.)
+- Download only the main content in Elävä arkisto
+- Fixed some Elävä arkisto audio streams and titles
+- Resuming audio wasn't working when just a few bytes had been downloaded
+
+20 Aug 2017, Version 2.23
+
+- Use HTTPS on Areena
+
+7 Aug 2017, Version 2.22
+
+- Display a progress bar when downloading HTML5 videos
+- Get all episodes on an Areena series page, not just dozen latest
+- Partially fixed the --showepisodepage output on Elävä Arkisto
+- Reduce network traffic by downloading metadata in compressed format
+
+31 Jul 2017, Version 2.21
+
+- Requires Python 2.7
+- Get non-adaptive MP4 when available. ffmpeg is need only rarely (never?)
+- Fixed the recording of live radio streams
+- New option --duration for limitting the max duration to download
+- Some invalid argument combinations that were previously silently ignored
+  now result in error
+- Unrecognized arguments are no longer passed to rtmpdump (use --rtmpdump
+  with a script instead)
+- Some rtmpdump argument aliases are no longer supported, for example -e or -z
+- --showepisodepage was broken and slow
+- Pipe HLS stream on a TS container. Better lip sync and compatibility
+
+19 Jul 2017, Version 2.20
+
+- Use setuptools for building and installing
+- The installation command has changed, see README.md
+
+4 Jul 2017, Version 2.19
+
+- Fixed a bug introduced in the previous version that caused some videos to fail
+- Print the URL being processed when downloading several URLs
+
+2 Jul 2017, Version 2.18
+
+- Some HTML5 streams were not being downloaded correctly
+- Append an extension to the output file name if not given on the command line
+
+18 Jun 2017, Version 2.17
+
+- Support for the HLS streams on Areena
+- New dependency: ffmpeg
+
+30 May 2017, Version 2.16
+
+- Improved support for Elävä arkisto and Svenska Arkivet
+- Option --ratelimit for limiting bandwidth consumption during download
+
+7 Mar 2017, Version 2.15
+
+- Improve support for Areena clips
+
+21 Jan 2017, Version 2.14
+
+- Better support for Yle Arkivet
+- Include episode number in the output filename
+
+6 Dec 2016, Version 2.13
+
+- Fix downloading of Areena HTTP streams
+- Support SOCKS proxies on youtube-dl backend
+
+24 Sep 2016, Version 2.12
+
+- Support Areena HTTPS URLs
+- Implement piping for HTTP streams
+
+25 Aug 2016, Version 2.11
+
+- Ability to select the audio language if multiple ones are available
+- Fix output file names of Swedish language streams
+
+29 Jul 2016, Version 2.10.3
+
+- Ability to call a postprocessing script after a successful download
+- Improve video detection on yle.fi/uutiset
+
+5 Jul 2016, Version 2.10.2
+
+- Updated installation instructions for Ubuntu 16.04
+- Process several URLs read from a file using the -i argument
+- Use --proxy also for video data, not just for metadata
+- Download subtitles when writing the output to a pipe
+
+7 Feb 2016, Version 2.10.1
+
+- Subtitle language selection was broken
+- Resume HDS streams with --resume
+- Support for SOCKS and HTTP proxies with --proxy
+
+31 Dec 2015, Version 2.10.0
+
+- Support for downloading Areena HTML5 videos
+- Removed the --protocol switch
+- New --backend switch for selecting between AdobeHDS.php and youtube-dl
+- rtmpdump is now required only when downloading Areena audio streams
+
+20 Dec 2015, Version 2.9.1
+
+- Fixed downloading of Areena live radio streams
+- The old areena-v3.yle.fi has been discontinued
+
+27 Oct 2015, Version 2.9.0
+
+- License changed to GPLv3
+- The updated AdobeHDS.php can download encrypted streams
+
+25 Oct 2015, Version 2.8.2
+
+- A page at http://yle.fi/uutiset/ can contain several clips
+- Save hearing impaired and translation subtitles to separate files
+- Show a better error message if a clip has expired or not yet available
+- Use Swedish title if Finnish one is unavailable
+
+16 Sep 2015, Version 2.8.1
+
+- Fixed the processing of Areena series pages
+
+22 Jul 2015, Version 2.8.0
+
+- Download clips at http://yle.fi/uutiset/
+- Improved Elävä arkisto support
+- Print the name of the output file
+
+2 Jun 2015, Version 2.7.2
+
+- Fix the -o argument
+- Updated dependencies in contrib/yle-dl.spec
+
+13 May 2015, Version 2.7.1
+
+- Improved support for piping to stdout
+- Fixed hard/soft subtitle selection
+- Support --maxbitrate on the youtubedl downloader
+- Print the name of the output file
+
+27 Apr 2015, Version 2.7.0
+
+- Support the updated Areena
+
+1 Mar 2015, Version 2.6.0
+
+- Support the updated Elävä Arkisto, http://yle.fi/aihe/elava-arkisto
+- Partial support for the Yle Arkivet, http://svenska.yle.fi/arkivet
+- Enable resume on the youtube-dl downloader
+
+3 Feb 2015, Version 2.5.1
+
+- Fixed bugs that prevented radio programs from being downloaded
+- More informative error message when the stream is DRM-protected
+- Show verbose output from AdobeHDS.php when --debug is given
+
+14 Jan 2015, Version 2.5.0
+
+- youtube-dl can now be used as the downloader backend instead of AdobeHDS.php
+- Minor improvements to piping the stream to stdout
+
+28 Dec 2014, Version 2.4.0
+
+- Support http://areena.kokeile.yle.fi
+- Dropped the support for YleX Areena because the service has been shut down
+- --pipe switch dumps the stream to stdout
+- Fixed downloading of several HDS streams during one session
+- Fixed subtitle file name encoding
+- Improved Elävä Arkisto compatibility
+- Changed the default path for AdobeHDS.php, override with --adobehds
+
+14 Jun 2014, Version 2.3.1
+
+- Fix -o and --maxbitrate on HDS streams. Maxbitrate is only approximate.
+- make install-adobehds downloads and installs AdobeHDS.php
+
+8 Jun 2014, Version 2.3.0
+
+- Support for Areena HDS streams (requires additional packages, see README)
+
+23 Mar 2014, Version 2.2.1
+
+- Fixed --help
+
+23 Mar 2014, Version 2.2.0
+
+- Download best availability quality streams by default
+- --maxbitrate controls the maximum bitrate of the stream to download
+- --hardsubs downloads a stream with burned-in subtitles if available
+- Continue downloading episodes on a series page even if one episode fails
+
+16 Mar 2014, Version 2.1.1
+
+- Fix live radio streams
+- Support Svenska Arenan links
+- Fix subtitle downloading on series pages
+- Load all episodes
+- New --showepisodepage switch for printing episode page URLs
+
+29 Apr 2013, Version 2.1.0
+
+- Support for live streams
+- New option --showtitle prints the name of the stream
+
+7 Nov 2012, Version 2.0.2
+
+- Minor XML parsing fixes
+- Fedora spec file contrib/yle-dl.spec contributed by Jari Karppinen
+
+4 July 2012, Version 2.0.1
+
+- Fixed --latestepisode
+- Fixed Scandinavian characters in output filenames
+
+19 June 2012, Version 2.0.0
+
+- Fixed RTMP URL parsing
+- Fixed filename encoding
+
+10 Jun 2012, Version 1.99.9
+
+- The modified rtmpdump is not required (nor included) anymore
+- Fixed live TV and radio and YleX streams
+- Workaround for the "Can't read http:///fcs/ident" problem on Mac OS X
+
+6 Jun 2012, Version 1.99.8
+
+- Adapt yle-dl to the recent changes in Areena
+
+23 May 2012, Version 1.99.7
+
+- Updated Areena URLs
+- Add byte order mark into subtitle files. Some players don't show
+  umlaut characters correctly without it.
+
+22 Apr 2012, Version 1.99.6
+
+- Re-implement --destdir option for setting the destination directory
+- Fixed --resume
+- Support for live streams
+- Fix compilation on Windows (patch by Martin Pärtel)
+- Avoid crashing because of wrong character encoding
+- Create install directory if it doesn't exist.
+
+13 Mar 2012, Version 1.99.5
+
+- Previous release didn't compile because of missing files
+
+10 Mar 2012, Version 1.99.4
+
+- --sublang option was not working
+- Cleaned up the plugin interface
+
+15 Feb 2012, Version 1.99.3
+
+- Better parser handles some videos which were failing before (patch by
+  Jouni Seppänen)
+- Improved handling of scandinavian characters in titles
+
+12 Jan 2012, Version 1.99.2
+
+- Updated Areena page parser to fix the recent breakage
+
+9 Jan 2012, Verison 1.99.1
+
+- Almost complete rewrite to support Yle Areena beta
+- Old Yle Areena is not supported
+- --sublang option for selecting the subtitle language
+- Removed --episodes switch, all episodes on the page are downloaded
+  by default
+- Removed --ylePassi, not needed anymore(?)
+
+29 Nov 2011, Version 1.4.6
+
+- Fix crash when filename had certain HTML entities
+- Support the updated Elävä arkisto
+- Updated rtmpdump snapshot to git-5d03a4f0d6216d
+
+27 Oct 2011, Version 1.4.5
+
+- Improved support for Akamai streams.
+
+11 Oct 2011, Version 1.4.4
+
+- Argument --vfat for creating Windows-compatible filenames works now
+  also in Elävä Arkisto and in YleX.
+- Updated rtmpdump snapshot to git-60218d0af0f4bd
+
+14 Jul 2011, Version 1.4.3
+
+- Added support for http://ylex.yle.fi/ylex-areena
+- Updated rtmpdump snapshot to git-c28f1bab7822de
+
+26 May 2011, Version 1.4.2
+
+- Install just the rtmpdump-yle binary to avoid conflicts with the
+  plain rtmpdump (patch by Ville Skyttä)
+- All the YLE specific parts have been moved into the librtmp code. It
+  is now possible to stream YLE videos in any librtmp-based program
+  using areenaParams URL option (patch by an anonymous contributor).
+- New option yle-dl --showurl outputs the clip URL.
+- "make STATIC_JSON=/path/to/json-c" links libjson statically.
+- Updated rtmpdump snapshot to v2.3+svn20110512.
+
+22 Feb 2011, Version 1.4.1
+
+- Fixed compilation on MinGW (thanks to Niko Mikkilä)
+- Do not build the shared library, static linking is used.
+- Improved support for Akamai streams.
+
+09 Feb 2011, Version 1.4.0
+
+- Fix dates in filenames (patch by Niko Mikkilä).
+- Link to system json-c library, drop embedded copy of json-c.
+- Debian packaging scripts by Eugene V. Lyubimkin.
+- Ignore --resume if the file does not exist.
+- Append subtitle to file name. Should fix the --episodes mode.
+- Updated rtmpdump snapshot to v2.3+svn20110207.
+
+04 Nov 2010, Version 1.3.1
+
+- Fix Elävä arkisto support (patch by Niko Mikkilä)
+- Updated rtmpdump snapshot to v2.3+svn20101104 and json-c to 0.9
+
+20 Sep 2010, Version 1.3.0
+
+- yle-dl can now download streams from Elävä arkisto.
+- Obey redirects. Required when connecting from foreign address.
+- libiconv required on OS X
+- Fixed compilation without SSL library.
+- Updated rtmpdump snapshot to v2.3+svn20100919
+
+4 Aug 2010, Version 1.2.4
+
+- Fix autoresume on long (longer than about an hour) streams
+- Updated rtmpdump snapshot to v2.3+svn20100726
+
+20 May 2010, Version 1.2.3
+
+- Option --vfat creates file names that are legal on Windows file
+  systems.
+- Option --destdir sets the directory for downloads.
+- A configuration file for Launchy Firefox extension.
+- Fixed --ylePassi option.
+
+19 Apr 2010, Version 1.2.2
+
+- Percent encode URLs when necessary.
+- Try harder to come up with distinct file names when downloading episodes.
+- Resuming works without explicit output file name on Yle streams.
+- Use "make posix ICONV=yes" if linking with libiconv is required.
+- Upated rtmpdump snapshot to 2.2c
+
+20 Feb 2010, Version 1.2.1
+
+- Fixed Akamai streams
+- yle-dl --latestepisode downloads the latest episode on a page
+- Upated rtmpdump snapshot to 2.1c+svn20100220
+
+06 Feb 2010, Version 1.2.0
+
+- Updated rtmpdump codebase to 2.1c+svn20100206
+- New dependency: Python (for yle-dl). Old dependency on libxml is
+  dropped.
+- In addition to being able to download from YLE Areena, rtmpdump-yle
+  behaves now like the unmodified rtmpdump on other sites.
+- New option --ylePassi for accessing content that requires login.
+  (The old option --auth behaves now like in unmodified rtmpdump).
+- Output filenames are created with correct charset in non-UTF8
+  locales.
+- Fixed a crash when output file name does not contain an extension.
+- Show file name in error message if file creation fails.
+- Ignore FLV packets received before the play command is sent.
+- Default installation location changed to /usr/local/bin. make
+  install warns, if it detects binaries in the old path.
+- yle-dl: download all episode on a page with --episodes (based on the
+  idea by Tuukka Hastrup).
+
+29 Aug 2009, version 1.1.7
+
+- Fixed a segfault on empty or invalid JSON input.
+- Fixed support for net radios (regression since 1.1.6)
+
+15 Aug 2009, version 1.1.6
+
+- Identify as Firefox when connection to Areena HTTP server.
+- A new command line option for overriding the default value of the
+  HTTP User-Agent header.
+- Changes to RTMP generation to make it more similar to the official
+  player.
+
+13 Aug 2009, version 1.1.5
+
+- Added support for FreeBSD. A patch by Antero Hytönen.
+- More fixes for Fedora 11. This time it should work, really.
+- Append User-Agent header to HTTP connections because YLE servers now
+  require it.
+
+7 Aug 2009, version 1.1.4
+
+- Send the bytes received report more frequently as required by the
+  recent changes on Yle servers.
+- Fixed compilation on Fedora 11.
+
+5 Aug 2009, version 1.1.3
+
+- Fixed a file corruption caused by auto resume.
+- Failed to connect when redirected.
+
+31 Jul 2009, version 1.1.2
+
+- New --autoResume mode for automatically resuming timed out streams
+  (enabled in yle-dl by default). Long streams can now be downloaded
+  in a single session.
+- Replace characters in filenames that are illegal on certain
+  filesystems.
+- Fix buffer overflows. Code is now Valgrind-clean. Avoids crash if -o
+  option given and the file exists.
+- Downloads cancelled with Ctrl-C can again be resumed (regression
+  since 1.1).
+
+24 Jul 2009, version 1.1.1
+
+- Re-enable faster than real-time downloads by correctly setting
+  the buffer size before connecting.
+- Send swfUrl when connecting. The Areena servers now refuses to talk
+  to us without it. Also other changes that bring the generated RTMP
+  packets closer to Areena flash player.
+
+15 Jul 2009, version 1.1
+
+- Support for Areena net radios and live streams (although live
+  streams are buggy).
+- Support for Akamai servers (only live streams tested).
+- Fixed compilation on Fedora 11.
+- Options --quiet and --verbose for controlling the output verbosity.
+  Be quieter by default.
+- Use considerably less CPU by updating the progress indicator less
+  frequently.
+- Fixed a buffer overflow and other potential problems. Thanks to
+  Reijo Tomperi.
+- Use the PREFIX defined in Makefile when calling rtmpdump-yle in
+  yle-dl.
+- It is now possible to download videos that require YLE passi by
+  giving the Areena cookie with the --auth command line option.
+- Append the optional parameters to the play packet only when their
+  values differ from default. The server seems be less likely to drop
+  connections this way.
+- yle-dl now correctly quotes parameters that contains white space.
+
+22 Jun 2009, version 1.0.2
+
+- Fixed a memory corruption in MP3 URL parsing code caused by
+  allocating too few bytes.
+- Remove '/' from the file names, and '.' from the beginning of the
+  file names.
+- Removed bashisms from yle-dl. Fixes --help on non-bash shells.
+- Avoid the temporary file by create the final destination file after
+  receiving stream title but before starting downloading.
+- Don't overwrite files: append an integer to file name, if the file
+  already exists.
+- When extracting clip ID, download the page if necessary. Now also
+  program name URLs can be used in addition to clip ID URLs.
+
+15 Jun 2009, version 1.0.1
+
+- Use .flv extension for the downloaded files. Some media players (vlc
+  at least) seem to have problems playing them otherwise.
+
+14 Jun 2009, version 1.0
+
+- Initial release
