@@ -32,4 +32,4 @@
 | [4](3/4) | [Nothing to do](3/4/README.md)                                         |
 | [5](3/5) | [README](3/5/README.md)                                                |
 | 6        | Skipped                                                                |
-| 7        | TODO                                                                   |
+| [7](3/7) | [README](3/7/README.md)                                                |
